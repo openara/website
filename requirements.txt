@@ -1,0 +1,4 @@
+psycopg2
+-e git+https://github.com/biodigitals/apetizer-content.git#egg=content
+-e git+https://github.com/biodigitals/apetizer-register.git#egg=register
+-e git+https://github.com/biodigitals/apetizer.git#egg=apetizer
