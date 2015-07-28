@@ -1,28 +1,28 @@
-# Site internet des Makerspace et Fablab de la région Auverge-Rhône-Alpes
+## Site internet des Makerspace et Fablab de la région Auverge-Rhône-Alpes
 
-## Installation
+### Installation
 
-1. Install python 2.7
+- Install python 2.7, virtualenv,libpython2.7-dev & postgresql-devel (libpq-dev in Debian/Ubuntu)
 
-2. In the directory where you have cloned the repo,
+- In the directory where you have cloned the repo,
 create a virtualenv to collect python packages
     
     virtualenv --no-site-packages .
 
-3. Enter the virtualenv context
+- Enter the virtualenv context
 
     source bin/activate
 
-4. Install the required packages
+- Install the required packages
 
     pip install -r requirements.txt
 
 
-5. Create the database:
+- Create the database:
 
     python manage.py migrate
 
 
-6. Finally run the server localy:
+- Finally run the server localy:
 
     python manage.py runserver
