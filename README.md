@@ -23,6 +23,28 @@ create a virtualenv to collect python packages
     python manage.py migrate
 
 
-- Finally run the server localy:
+Create a superuser:
+
+    python manage.py createsuperuser
+
+
+Run the server localy:
 
     python manage.py runserver
+
+
+Log in the admin:
+
+    http://localhost:8000/admin/
+    
+
+
+Add a first language ( fixtures don't load actually ... may be fixed soon )
+
+
+Publish the root item to provide access to public users ( otherwise, '/' is 404 when you logg off )
+    
+    
+    
+    
+    
