@@ -2,28 +2,33 @@
 
 ### Installation
 
-- Install python 2.7, virtualenv,libpython2.7-dev & postgresql-devel (libpq-dev in Debian/Ubuntu)
+Install python 2.7, virtualenv,libpython2.7-dev & postgresql-devel (libpq-dev in Debian/Ubuntu)
 
-- In the directory where you have cloned the repo,
+In the directory where you have cloned the repo,
 create a virtualenv to collect python packages
+
     
     virtualenv --no-site-packages .
 
-- Enter the virtualenv context
+Enter the virtualenv context
+
 
     source bin/activate
 
-- Install the required packages
+Install the required packages
+
 
     pip install -r requirements.txt
 
 
-- Create the database:
+Create the database:
+
 
     python manage.py migrate
 
 
 Create a superuser:
+
 
     python manage.py createsuperuser
 
@@ -35,6 +40,7 @@ Run the server localy:
 
 Log in the admin:
 
+	python manage.py createsuperuser
     http://localhost:8000/admin/
     
 
