@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static i18n content_tags %}
+
+{% block page_body %}
+    <div id="content" role="main">
+        
+        {% block page-header %}
+        {% endblock %}
+
+        {% block body %}
+        <section class="section swatch-white-yellow">
+            <div class="container">
+                <header class="section-header underline">
+                    <img src="{% static "images/logo-openara.png" %}" width="133" /><br/>
+                    <h1 class="headline hyper hairline">{{ currentNode.title }}</h1>
+                    <p class="big">{{ currentNode.description }}</p>
+                </header>
+            </div>
+        </section>
+        {% endblock %}
+        
+        <section id="page-content" class="section swatch-yellow-black has-top">
+            <div class="decor-top">
+                <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0 L100 100 L0 100" stroke-width="0"></path>
+                </svg>
+            </div>
+            {% block content %}
+            <div class="row">
+                <div class="col-md-8 col-md-push-2">
+                {% content_item currentNode.url %}
+                {% include 'we-are-makers.html' %}
+                </div>
+            </div>
+            {% endblock %}
+        </section>
+
+        <footer id="footer" role="contentinfo">
+            <section class="section swatch-black-yellow has-top">
+                <div class="decor-top">
+                    <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0 L50 100 L100 0 L100 100 L0 100" stroke-width="0"></path>
+                    </svg>
+                </div>
+                {% block page-footer %}
+                {% endblock %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div id="swatch_social-2" class="sidebar-widget  widget_swatch_social">
+                                <ul class="unstyled inline small-screen-center social-icons social-background social-big">
+                                    <li>
+                                        <a target="_blank" href="http://github.com/openara">
+                                            <i class="fa fa-github"></i>
+                                        </a>
+                                    </li>
+                                    {% comment %}
+                                    <li>
+                                        <a target="_blank" href="http://www.twitter.com/openara">
+                                            <i class="fa fa-cc"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="mailto:openara@gmail.com">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </li>
+                                    {% endcomment %}
+                                </ul>
+                            </div>
+                            <p class="separator"><i class="fa fa-cc fa-4x" style="color:#ccc;"></i></p>
+                            <div id="text-4" class="sidebar-widget widget_text">
+                                <div class="textwidget">openara | reseau libre et ouvert
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </div>
+{% endblock %}

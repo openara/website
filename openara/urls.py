@@ -28,8 +28,9 @@ urlpatterns = patterns('',
         name=FrontView.view_name),
     
     # some dashboard stuff ...
-    url(r'^dashboard/', include('content.dashboard.urls')),
     url(r'^dashboard/todo/', include('content.todo.urls')),
+    # catching up dashboard urls
+    url(r'^dashboard/', include('content.dashboard.urls')),
     
     # cms pages
     url(ContentView.get_url_regexp('.*?'),

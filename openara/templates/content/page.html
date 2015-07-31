@@ -1,0 +1,297 @@
+
+{% load static content_tags content_ui_tags  sekizai_tags %}<!DOCTYPE html>
+<!-- saved from url=(0056)http://semantic-ui.com/introduction/getting-started.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Standard Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+<link rel="image_src" type="image/jpeg" href="./page_files/logo.png">
+<base href="{{ currentNode.get_url }}" ></base>
+<!-- Site Properities -->
+<meta name="generator" content="DocPad v6.78.1">
+<title>Getting Started | Semantic UI</title>
+
+<meta name="description" content="Getting up and running with Semantic UI">
+<meta name="keywords" content="html5, ui, library, framework, javascript">
+
+{% block extra-scripts %}
+<script src="{% static 'components/semanticui/jquery.min.js' %}"></script>
+<script src="{% static 'components/semanticui/cookie.min.js' %}"></script>
+<script src="{% static 'components/semanticui/easing.min.js' %}"></script>
+<script src="{% static 'components/semanticui/highlight.min.js' %}"></script>
+<script src="{% static 'components/semanticui/history.min.js' %}"></script>
+<script src="{% static 'components/semanticui/tablesort.min.js' %}"></script>
+
+<script src="{% static 'components/semanticui/semantic.min.js' %}"></script>
+{% endblock %}
+
+{% block extra-styles %}
+<link rel="stylesheet" type="text/css" class="ui" href="{% static 'components/semanticui/semantic.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/semanticui/docs.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/semanticui/rtl.css' %}">
+{% endblock %}
+
+<body >
+{% block page_body %}
+<div id="example" class="started pushable" ontouchstart="">
+  <div class="ui vertical inverted sidebar menu left" id="toc">
+  
+<div class="item">
+  <a class="ui logo icon image" href="/">
+    <img src="{% static 'images/logo-openara.png' %}" width="70">
+  </a>
+  <a href="/"><b>{{ rootNode.title }}</b></a>
+</div>
+{% for root in roots %}
+    {% if root.get_children|length %}
+    <a class="item" href="{{ root.get_url }}">
+      <b>{{ root.label }}</b>
+    </a>
+    {% else %}
+    <div class="item">
+      <div class="header">{{ root.label }}</div>
+      <div class="menu">
+        {% for child in root.get_children %}
+          <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+<div class="ui black big launch right attached fixed button">
+  <i class="content icon"></i>
+  <span class="text">Menu</span>
+</div>
+
+<div class="ui fixed inverted main menu">
+  <div class="ui container">
+    <a class="launch icon item">
+      <i class="content icon"></i>
+    </a>
+    <div class="item">{{ currentNode.label }}</div>
+    <div class="right menu">
+      
+      <div class="vertically fitted borderless item">
+        G
+      </div>
+      
+      <!--
+      <div class="item">
+        <div class="ui hidden right aligned search input" id="search">
+          <div class="ui transparent icon input">
+            <input class="prompt" type="text" placeholder="Search...">
+            <i class="inverted search link icon" data-content="Search UI"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+</div>
+
+  <div class="pusher">
+    <div class="full height">
+      <div class="toc">
+        <div class="ui vertical inverted sticky menu" >
+            <div class="item">
+              <a class="ui logo icon image" href="/">
+                <img src="{% static 'images/logo-openara.png' %}">
+              </a>
+              <a href="{{ rootNode.title }}"><b>{{ rootNode.title }}</b></a>
+            </div>
+            {% for node in roots %}
+                {% if node.is_leaf_node %}
+                <a class="item" href="{{ node.get_url }}">
+                  <b>{{ node.label }}</b>
+                </a>
+                {% else %}
+                <a class="item" href="{{ node.get_url }}">
+                  <b>{{ node.label }}</b>
+                </a>
+                <div class="menu">
+                  {% for child in node.get_children %}
+                      {% if child.is_leaf_node %}
+                      <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+                      {% else %}
+                      <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+                      {% endif %}
+                  {% endfor %}
+                  </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+      
+        <div class="article">
+            <div class="ui masthead vertical segment">
+              <div class="ui container">
+                <div class="introduction">
+                  <h1 class="ui header">{{ currentNode.title }} <div class="sub header">{{ currentNode.description }}</div></h1>
+                  <div class="ui hidden divider"></div>
+                  <div class="ui full width">{% content_render currentNode.content %}</div>
+                  <div class="ui hidden divider"></div>
+                </div>
+                  <div class="ui secondary menu">
+                    <a class="icon item" href="view/" ><i class="icon"></i>View</a>
+                    <a class="icon item" href="translate/" ><i class="icon"></i>Textes</a>
+                    <a class="icon item" href="location/" ><i class="icon"></i>Localisation</a>
+                    <a class="icon item" href="timing/" ><i class="icon"></i>Agenda</a>
+                    <a class="icon item" href="change/" ><i class="icon"></i>Publication</a>
+                    <a class="icon item" href="medias/" ><i class="icon"></i>Medias</a>
+                    {% comment %}
+                    <div class="ui language dropdown right floating icon item" id="languages" data-content="Sélectionnez votre langue">
+                      <i class="world icon"></i>
+                      <div class="menu">
+                        <div class="header">Sélectionnez votre langue</div>
+                        <div class="scrolling menu">
+                          <div class="item" data-percent="100" data-value="en" data-text="Anglais" data-english="English"><span class="description">Français</span> French </div>
+                          <div class="item" data-percent="100" data-value="en" data-text="Anglais" data-english="English"><span class="description">English</span> Anglais </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endcomment %}
+                </div>
+               </div>
+            </div>
+            <div class="main ui intro container">
+                           
+                {% block body %}
+                {% endblock %}
+                
+                {% block content %}
+                <div class="ui dividing right rail">
+                    
+                    <div class="ui sticky" >
+                        <h4 class="ui header">{{ currentNode.label }}</h4>
+                        <div class="ui vertical following fluid accordion text menu">
+                        {% if currentNode.is_leaf_node %}
+                            {% for node in currentNode.parent.get_children %}
+                            <div class="item">
+                                <a class="active title"><i class="dropdown icon"></i> <b>{{ node.label }}</b></a>
+                                <div class="active content menu">
+                                    <a class="item" href="{{ node.parent.get_url }}#{{ node.slug }}">{{ node.title }}</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for node in currentNode.get_children %}
+                            <div class="item">
+                                <a class="active title"><i class="dropdown icon"></i> <b>{{ node.label }}</b></a>
+                                <div class="active content menu">
+                                    <a class="item" href="#{{ node.slug }}">{{ node.title }}</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    </div>
+                
+                </div>
+                
+                {% block ui %}
+                    {% block ui-head %}{% endblock %}
+                    {% block ui-form %}{% endblock %}
+                    {% block ui-foot %}{% endblock %}
+                {% endblock %}
+                
+                {% if currentNode.is_leaf_node %}
+                    {% for node in currentNode.parent.get_children %}
+                    <div class="item">
+                      <h2 class="ui dividing header">{{ node.label }}<a class="anchor" id="{{ node.label }}"></a></h2>
+                      <div class="no example">
+                        <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
+                        <a class="anchor" id="{{ node.slug }}"></a>
+                        
+                        <div class="ui sub header" >{{ node.description }}</div>
+                        {% content_render node.content %}
+                        <div class="floated" >
+                        {% if not node.is_leaf_node %}
+                            <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
+                        {% endif %}
+                        </div>
+                      </div>
+                    <div class="ui button" >
+                        {% content_add_link node.parent %}
+                    </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    {% for node in currentNode.get_children %}
+                    <div class="item">
+                      <h2 class="ui dividing header">{{ node.label }}<a class="anchor" id="{{ node.label }}"></a></h2>
+                      <div class="no example">
+                        <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
+                        
+                        <a class="anchor" id="{{ node.slug }}"></a>
+                          
+                        <div class="ui sub header" >{{ node.description }}</div>
+                        {% content_render node.content %}
+                        <div class="floated" >
+                        {% if not node.is_leaf_node %}
+                            <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
+                        {% endif %}
+                        </div>
+                      </div>
+                      <div class="ui dividing button full width" >
+                        {% content_add_link node.parent %}
+                      </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                
+                {% endblock %}
+                
+            </div>
+
+        </div>
+    </div>
+
+    <div class="ui black inverted vertical footer segment">
+      <div class="ui center aligned container">
+        <div class="ui stackable inverted grid">
+          <div class="three wide column">
+            <h4 class="ui inverted header">Communauté</h4>
+            <div class="ui inverted link list">
+              <a class="item" href="/makerspaces/" target="_blank">Makerspaces</a>
+              <a class="item" href="/ressourceries/" target="_blank">Ressourceries</a>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h4 class="ui inverted header">Network</h4>
+            <div class="ui inverted link list">
+              <a class="item" href="https://github.com/openara/website/" target="_blank">Dépôt GitHub</a>
+            </div>
+          </div>
+          <div class="seven wide right floated column">
+            <h4 class="ui inverted teal header">Aider à péréniser ce projet</h4>
+            <p> Le soutien du développement d'openARA vient directement de la communauté.</p>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="hosted_button_id" value="7ZAF2Q8DBZAQL">
+              <button type="submit" class="ui large teal button">Faites un don aujourd'hui</button>
+            </form>
+          </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <img src="{% static 'images/logo-openara.png' %}" class="ui centered mini image">
+        <div class="ui horizontal inverted small divided link list">
+          <a class="item" href="http://semantic-ui.mit-license.org/" target="_blank">Gratuit et Open Source (MIT)(CC)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% addtoblock "js" %}
+<script src="{% static 'components/semanticui/less.min.js' %}"></script>
+{% endaddtoblock %}
+{% addtoblock "css" %}
+<style>header{position:absolute;}</style>
+{% endaddtoblock %}
+</div>
+{% endblock %}
+</body></html>

@@ -14,7 +14,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/assets/images/favicons/apple-touch-icon-72x72-precomposed.png">
         <!-- For iPhone: -->
         <link rel="apple-touch-icon-precomposed" href="/static/assets/images/favicons/apple-touch-icon-60x60-precomposed.png">
-        
+        <base href="{{ currentNode.get_url }}" ></base>
         {% include 'assets/fonts.html' %}
         
         {% block canonical-link %}{% endblock canonical-link %}
@@ -35,23 +35,9 @@
         {% render_block "css" %}
     </head>
     <body>
-
-{% block page_top_bottom %}
-
-    {% if user.is_authenticated %}
-        {% if has_permission %}
-            {% block ui-head %}{% endblock %}
-            {% block ui %}
-            {% endblock %}
-            {% block ui-foot %}{% endblock %}
-        {% endif %}
-    {% else %}
     
-    {% endif %}
-    
-{% endblock %}
-
         <header id="masthead" class="navbar navbar-sticky swatch-white-black" role="banner">
+
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".main-navbar">
@@ -65,24 +51,38 @@
                     </a>
                 </div>
                 <nav class="collapse navbar-collapse main-navbar" role="navigation">
+                    
+                    {% if request.user.is_staff %}
                     {% comment %}
                     <div class="sidebar-widget widget_search pull-right">
                         <form action="/search/">
                             <div class="input-group">
                                 <input name="keyword" class="form-control" type="text" placeholder="Search here....">
                                 <span class="input-group-btn">
-                            <button class="btn" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
+                                    <button class="btn" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
                             </div>
                         </form>
                     </div>
                     {% endcomment %}
+                    {% endif %}
+                    
                     <ul class="nav navbar-nav navbar-right">
                         <li class="{% if currentNode.get_url == '/' %}active{% endif %}"><a href="/">Accueil</a></li>
+                        {% if request.user.is_staff %}
+                        <li class="{% if currentNode.get_url == '/documentation/' %}active{% endif %}"><a href="/documentation/">Documentation</a></li>
+                        <li class="{% if currentNode.get_url == '/documentation/' %}active{% endif %}"><a href="/documentation/">Labs</a></li>
+                        <li class="{% if currentNode.get_url == '/logout/' %}active{% endif %}"><a href="/logout/">Déconnexion</a></li>
+                        {% endif %}
+                        
                         {% comment %}
-                        <li class="{% if currentNode.get_url == '/register/' %}active{% endif %}"><a href="/register/">Register</a></li>
+                        {% if request.user.is_authenticated %}
+                        {% else %}
+                        <li class="{% if currentNode.get_url == '/register/' %}active{% endif %}"><a href="/register/">Nous rejoindre</a></li>
+                        <li class="{% if currentNode.get_url == '/register/' %}active{% endif %}"><a href="/profile/">Profile</a></li>
+                        {% endif %}
                         <li class="{% if currentNode.get_url == '/register/' %}active{% endif %}"><a href="/subscribe/">Subscribe</a></li>
                         <li class="{% if currentNode.get_url == '/contact/' %}active{% endif %}"><a href="/contact/">Contact</a></li>
                         {% endcomment %}
@@ -90,10 +90,12 @@
                 </nav>
             </div>
         </header>
-        
+
+{% block page_body %}
+    
         {% block page-breadcrumb %}
             {% if request.path != '/' %}
-            {% content_breadcrumb %}
+            <div class="container">{% content_breadcrumb %}</div>
             {% endif %}
         {% endblock %}
         {% block page-message %}
@@ -106,8 +108,30 @@
             {% endif %}
         {% endblock %}
         
+                
+        {% block page_top_bottom %}
+        
+            {% if user.is_authenticated %}
+                {% if has_permission %}
+                    {% block ui-head %}{% endblock %}
+                    {% block ui %}
+                    {% endblock %}
+                    {% block ui-foot %}{% endblock %}
+                {% endif %}
+            {% else %}
+            
+            {% endif %}
+            
+        {% endblock %}
+
+
+        {% block page_content %}
         <div id="content" role="main">
+            
             {% block page-header %}
+            {% endblock %}
+
+            {% block body %}
             <section class="section swatch-white-yellow">
                 <div class="container">
                     <header class="section-header underline">
@@ -125,54 +149,16 @@
                         <path d="M0 0 L100 100 L0 100" stroke-width="0"></path>
                     </svg>
                 </div>
-                {% block body %}
-                {% endblock %}
-                
                 {% block content %}
                 <div class="row">
                     <div class="col-md-8 col-md-push-2">
-                    {% content_item currentNode %}
+                    {% content_item currentNode.url %}
+                    {% include 'we-are-makers.html' %}
                     </div>
                 </div>
                 {% endblock %}
             </section>
-            
-            
-            <section class="section swatch-yellow-black has-top">
-                <div class="decor-top">
-                    <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0 L100 100 L0 100" stroke-width="0"></path>
-                    </svg>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-10 col-md-push-1">
-                    {% include 'we-are-makers.html' %}
-                    </div>
-                </div>
-                
-                
-                {% comment %}
-                <div class="container">
-                    {% block bottom-content %}
-                    <header class="section-header underline text-center">
-                        <h1 class="headline super hairline">tenez moi au courant !</h1>
-                    </header>
-                    <div>
-                        <form id="action-form" class="text-center" action="" method="POST" >
-                            {{ action_forms.0.email }}
-                            {{ action_forms.0.first_name }}
-                            {{ action_forms.0.last_name }}
-                            {% csrf_token %}
-                            <br />
-                            <button class="" style="width:50%;" >voila !</button>
-                        </form>
-                    </div>
-                    {% endblock %}
-                </div>
-                {% endcomment %}
-            </section>
-            
+
             <footer id="footer" role="contentinfo">
                 <section class="section swatch-black-yellow has-top">
                     <div class="decor-top">
@@ -217,6 +203,9 @@
                 </section>
             </footer>
         </div>
+        {% endblock %}
+{% endblock %}
+
         <a class="go-top hex-alt" href="javascript:void(0)">
             <i class="fa fa-angle-up"></i>
         </a>
@@ -238,4 +227,5 @@
         </script>
         {% render_block "js" %}
     </body>
+
 </html>
