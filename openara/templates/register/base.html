@@ -15,7 +15,7 @@
     <ul id="page-messages" class="messages">
         {% for message in messages %}
             {% if not debug or 'debug' not in message.tags %}
-                <li class="alert alert-warning {% if message.tags %}{{ message.tags }}{% endif %} fade in" >
+                <li class="ui message alert alert-warning {% if message.tags %}{{ message.tags }}{% endif %} fade in" >
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     {{ message|safe }}
                 </li>

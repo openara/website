@@ -100,7 +100,7 @@
         {% block page-message %}
             {% if messages %}
                 {% for message in messages %}
-                  <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                  <div {% if message.tags %} class="ui message alert alert-{{ message.tags }}"{% endif %}>
                       <strong>{{ message }}</strong>
                   </div>
                 {% endfor %}

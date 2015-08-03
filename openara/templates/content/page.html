@@ -1,4 +1,3 @@
-
 {% load static content_tags content_ui_tags  sekizai_tags %}<!DOCTYPE html>
 <!-- saved from url=(0056)http://semantic-ui.com/introduction/getting-started.html -->
 <html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,9 +10,9 @@
 <base href="{{ currentNode.get_url }}" ></base>
 <!-- Site Properities -->
 <meta name="generator" content="DocPad v6.78.1">
-<title>Getting Started | Semantic UI</title>
+<title>{{ currentNode.title }} | OpenARA</title>
 
-<meta name="description" content="Getting up and running with Semantic UI">
+<meta name="description" content="{{ currentNode.descriotion }}">
 <meta name="keywords" content="html5, ui, library, framework, javascript">
 
 {% block extra-scripts %}
@@ -107,7 +106,7 @@
             {% for node in roots %}
                 {% if node.is_leaf_node %}
                 <a class="item" href="{{ node.get_url }}">
-                  <b>{{ node.label }}</b>
+                  {{ node.label }}
                 </a>
                 {% else %}
                 <a class="item" href="{{ node.get_url }}">
@@ -116,9 +115,9 @@
                 <div class="menu">
                   {% for child in node.get_children %}
                       {% if child.is_leaf_node %}
-                      <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+                      <a class="item" href="{{ child.parent.get_url }}#{{ child.slug }}">{{ child.title }} </a>
                       {% else %}
-                      <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+                      <a class="item" href="{{ child.get_url }}"><b>{{ child.title }}</b> </a>
                       {% endif %}
                   {% endfor %}
                   </div>
@@ -133,7 +132,6 @@
                 <div class="introduction">
                   <h1 class="ui header">{{ currentNode.title }} <div class="sub header">{{ currentNode.description }}</div></h1>
                   <div class="ui hidden divider"></div>
-                  <div class="ui full width">{% content_render currentNode.content %}</div>
                   <div class="ui hidden divider"></div>
                 </div>
                   <div class="ui secondary menu">
@@ -159,93 +157,87 @@
                </div>
             </div>
             <div class="main ui intro container">
-                           
+                
                 {% block body %}
                 {% endblock %}
                 
                 {% block content %}
+                
+                    {% block ui %}
+                        {% block ui-head %}{% endblock %}
+                        {% block ui-form %}{% endblock %}
+                        {% block ui-foot %}{% endblock %}
+                    {% endblock %}
+
+                    <div class="ui dividing item">
+                        <div class="ui ">{% content_render currentNode.content %}</div>
+                    </div>
+                    
+                    <div>
+                        <div class="ui dropdown">
+                            {% for key in item_group_by %}
+                            
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    {% for node in nodes %}
+                    
+                    {% ifchanged node.label %}
+                        {% if not forloop.first %}
+                            {% if node.parent %}
+                            <div class="ui dividing button full width" >
+                                {% content_add_link node.parent %}
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        <h2 class="ui dividing header">{{ node.label }}<a class="anchor" id="{{ node.label }}"></a></h2>
+                    {% endifchanged %}
+                    
+                    <div class="ui item">
+                        <a class="anchor" id="{{ node.slug }}"></a>
+                        <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
+                        <div class="ui" >
+                            {% content_render node.content %}
+                        </div>
+                        {% if not node.is_leaf_node %}
+                        <div class="ui floated" >
+                            <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                      
+                    {% if forloop.last %}
+                    {% if node.parent %}
+                    <div class="ui dividing button full width" >
+                        {% content_add_link node.parent %}
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                      
+                    {% endfor %}
+                
+                
+                {% endblock %}
+
                 <div class="ui dividing right rail">
                     
                     <div class="ui sticky" >
-                        <h4 class="ui header">{{ currentNode.label }}</h4>
+                        <h4 class="ui header">{{ nodes.0.parent.title }}</h4>
                         <div class="ui vertical following fluid accordion text menu">
-                        {% if currentNode.is_leaf_node %}
-                            {% for node in currentNode.parent.get_children %}
-                            <div class="item">
-                                <a class="active title"><i class="dropdown icon"></i> <b>{{ node.label }}</b></a>
-                                <div class="active content menu">
-                                    <a class="item" href="{{ node.parent.get_url }}#{{ node.slug }}">{{ node.title }}</a>
-                                </div>
+                        {% for node in nodes %}
+                        <div class="item">
+                            {% ifchanged node.label %}
+                            <a class="active title"><i class="dropdown icon"></i> <b>{{ node.label }}</b></a>
+                            {% endifchanged %}
+                            <div class="active content menu">
+                                <a class="item" href="{{ node.parent.get_url }}#{{ node.slug }}">{{ node.title }}</a>
                             </div>
-                            {% endfor %}
-                        {% else %}
-                            {% for node in currentNode.get_children %}
-                            <div class="item">
-                                <a class="active title"><i class="dropdown icon"></i> <b>{{ node.label }}</b></a>
-                                <div class="active content menu">
-                                    <a class="item" href="#{{ node.slug }}">{{ node.title }}</a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% endif %}
+                        </div>
+                        {% endfor %}
                         </div>
                     </div>
-                
                 </div>
-                
-                {% block ui %}
-                    {% block ui-head %}{% endblock %}
-                    {% block ui-form %}{% endblock %}
-                    {% block ui-foot %}{% endblock %}
-                {% endblock %}
-                
-                {% if currentNode.is_leaf_node %}
-                    {% for node in currentNode.parent.get_children %}
-                    <div class="item">
-                      <h2 class="ui dividing header">{{ node.label }}<a class="anchor" id="{{ node.label }}"></a></h2>
-                      <div class="no example">
-                        <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
-                        <a class="anchor" id="{{ node.slug }}"></a>
-                        
-                        <div class="ui sub header" >{{ node.description }}</div>
-                        {% content_render node.content %}
-                        <div class="floated" >
-                        {% if not node.is_leaf_node %}
-                            <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
-                        {% endif %}
-                        </div>
-                      </div>
-                    <div class="ui button" >
-                        {% content_add_link node.parent %}
-                    </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    {% for node in currentNode.get_children %}
-                    <div class="item">
-                      <h2 class="ui dividing header">{{ node.label }}<a class="anchor" id="{{ node.label }}"></a></h2>
-                      <div class="no example">
-                        <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
-                        
-                        <a class="anchor" id="{{ node.slug }}"></a>
-                          
-                        <div class="ui sub header" >{{ node.description }}</div>
-                        {% content_render node.content %}
-                        <div class="floated" >
-                        {% if not node.is_leaf_node %}
-                            <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
-                        {% endif %}
-                        </div>
-                      </div>
-                      <div class="ui dividing button full width" >
-                        {% content_add_link node.parent %}
-                      </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-                
-                
-                {% endblock %}
                 
             </div>
 

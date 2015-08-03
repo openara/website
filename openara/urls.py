@@ -1,9 +1,10 @@
+from content.views.content import ContentView
+from content.views.front import FrontView
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from content.views.content import ContentView
-from content.views.front import FrontView
+from digger.views.dashboard import TwitterSearchView
 
 admin.autodiscover()
 
@@ -28,9 +29,9 @@ urlpatterns = patterns('',
         name=FrontView.view_name),
     
     # some dashboard stuff ...
-    url(r'^dashboard/todo/', include('content.todo.urls')),
+    #url(r'^dashboard/todo/', include('content.todo.urls')),
     # catching up dashboard urls
-    url(r'^dashboard/', include('content.dashboard.urls')),
+    #url(r'^dashboard/', include('content.dashboard.urls')),
     
     # cms pages
     url(ContentView.get_url_regexp('.*?'),
