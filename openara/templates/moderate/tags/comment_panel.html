@@ -1,0 +1,48 @@
+{% load staticfiles momentjs moderate_tags %}
+
+<div class="ui main container">
+    <div class="ui">
+        {% include 'moderate/tags/comments.html' %}
+        {% include 'moderate/tags/comment_form.html' %}
+    </div>
+    
+    <div class="ui dividing right rail">
+        
+        <h4 class="ui header" >Note</h4>
+        {% moderate_average_evaluation currentNode %}
+        
+        <h4 class="ui header" >Avis des relecteurs</h4>
+        {% for ur in review.reviewers %}
+            <div class="{{ ur.status}}" >
+            <div>
+                <div >               
+                    <div >{{ur.status }}</div>
+                </div>
+                <div style="">
+                    <span >{{ ur.email }}</span>
+                    <div style="margin:8px; font-size:12px;" >{% moment_from_now  ur.modified_date %}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% include 'moderate/tags/vote_form.html' %}
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/libs/moment-2.0.0.js' %}" ></script>
+<script type="text/javascript" src="{% static 'js/libs/moment/lang/fr.js' %}" ></script>
+
+<script type="text/javascript">
+    $(document).ready( function(){
+            moment.lang('fr');
+            $('time.moment-from-now').each( function( index ){
+                    try {
+                            var datetime = moment( $(this).attr('datetime') );
+                            $(this).text( datetime.fromNow(false) );
+                    } catch( err ) {
+                        console.log(err);
+                    }
+            });
+    });
+    
+</script>

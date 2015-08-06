@@ -1,4 +1,4 @@
-{% load static content_tags content_ui_tags  sekizai_tags %}<!DOCTYPE html>
+{% load static content_tags content_ui_tags thumbnail sekizai_tags momentjs moderate_tags %}<!DOCTYPE html>
 <!-- saved from url=(0056)http://semantic-ui.com/introduction/getting-started.html -->
 <html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Standard Meta -->
@@ -34,68 +34,67 @@
 
 <body >
 {% block page_body %}
+
+{% block ui %}
+{% endblock %}
+    
 <div id="example" class="started pushable" ontouchstart="">
-  <div class="ui vertical inverted sidebar menu left" id="toc">
-  
-<div class="item">
-  <a class="ui logo icon image" href="/">
-    <img src="{% static 'images/logo-openara.png' %}" width="70">
-  </a>
-  <a href="/"><b>{{ rootNode.title }}</b></a>
-</div>
-{% for root in roots %}
-    {% if root.get_children|length %}
-    <a class="item" href="{{ root.get_url }}">
-      <b>{{ root.label }}</b>
-    </a>
-    {% else %}
-    <div class="item">
-      <div class="header">{{ root.label }}</div>
-      <div class="menu">
-        {% for child in root.get_children %}
-          <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-{% endfor %}
-</div>
 
-<div class="ui black big launch right attached fixed button">
-  <i class="content icon"></i>
-  <span class="text">Menu</span>
-</div>
-
-<div class="ui fixed inverted main menu">
-  <div class="ui container">
-    <a class="launch icon item">
-      <i class="content icon"></i>
-    </a>
-    <div class="item">{{ currentNode.label }}</div>
-    <div class="right menu">
-      
-      <div class="vertically fitted borderless item">
-        G
-      </div>
-      
-      <!--
-      <div class="item">
-        <div class="ui hidden right aligned search input" id="search">
-          <div class="ui transparent icon input">
-            <input class="prompt" type="text" placeholder="Search...">
-            <i class="inverted search link icon" data-content="Search UI"></i>
+    <div class="ui sidebar left vertical inverted menu" id="toc">
+        <div class="item">
+          <a class="ui logo icon image" href="/">
+            <img src="{% static 'images/logo-openara.png' %}" width="70">
+          </a>
+          <a href="/"><b>{{ rootNode.title }}</b></a>
+        </div>
+    {% for root in roots %}
+        {% if root.get_children|length %}
+        <a class="item" href="{{ root.get_url }}">
+          <b>{{ root.label }}</b>
+        </a>
+        {% else %}
+        <div class="item">
+          <div class="header">{{ root.label }}</div>
+          <div class="menu">
+            {% for child in root.get_children %}
+              <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+            {% endfor %}
           </div>
-          <div class="results"></div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+    
+    
+    
+    <div class="ui fixed inverted main menu">
+      <div class="ui container">
+        <a class="launch icon item">
+          <i class="content icon"></i>
+        </a>
+        <div class="item">{{ currentNode.label }}</div>
+        
+        <div class="right menu">
+          <div class="vertically fitted borderless item">
+            G
+          </div>
+          <div class="item">
+            <div class="ui hidden right aligned search input" id="search">
+              <div class="ui transparent icon input">
+                <input class="prompt" type="text" placeholder="Search...">
+                <i class="inverted search link icon" data-content="Search UI"></i>
+              </div>
+              <div class="results"></div>
+            </div>
+          </div>
         </div>
       </div>
-      -->
     </div>
-  </div>
-</div>
 
   <div class="pusher">
     <div class="full height">
       <div class="toc">
+      
         <div class="ui vertical inverted sticky menu" >
             <div class="item">
               <a class="ui logo icon image" href="/">
@@ -103,6 +102,11 @@
               </a>
               <a href="{{ rootNode.title }}"><b>{{ rootNode.title }}</b></a>
             </div>
+            <div class="ui black big launch right attached fixed button">
+              <i class="content icon"></i>
+              <span class="text">Menu</span>
+            </div>
+            
             {% for node in roots %}
                 {% if node.is_leaf_node %}
                 <a class="item" href="{{ node.get_url }}">
@@ -129,19 +133,19 @@
         <div class="article">
             <div class="ui masthead vertical segment">
               <div class="ui container">
+                {% content_breadcrumb %}
                 <div class="introduction">
                   <h1 class="ui header">{{ currentNode.title }} <div class="sub header">{{ currentNode.description }}</div></h1>
                   <div class="ui hidden divider"></div>
-                  <div class="ui hidden divider"></div>
                 </div>
                   <div class="ui secondary menu">
-                    <a class="icon item" href="view/" ><i class="icon"></i>View</a>
-                    <a class="icon item" href="translate/" ><i class="icon"></i>Textes</a>
-                    <a class="icon item" href="location/" ><i class="icon"></i>Localisation</a>
-                    <a class="icon item" href="timing/" ><i class="icon"></i>Agenda</a>
-                    <a class="icon item" href="change/" ><i class="icon"></i>Publication</a>
+                    <a class="icon item" href="view/" ><i class="icon"></i>Lire</a>
                     <a class="icon item" href="medias/" ><i class="icon"></i>Medias</a>
+                    <a class="icon item" href="map/" ><i class="icon"></i>Carte</a>
+                    <a class="icon item" href="agenda/" ><i class="icon"></i>Agenda</a>
                     {% comment %}
+                    <a class="icon item" href="change/" ><i class="icon"></i>Publication</a>
+                    <a class="icon item" href="timing/" ><i class="icon"></i>Agenda</a>
                     <div class="ui language dropdown right floating icon item" id="languages" data-content="Sélectionnez votre langue">
                       <i class="world icon"></i>
                       <div class="menu">
@@ -162,17 +166,11 @@
                 {% endblock %}
                 
                 {% block content %}
-                
-                    {% block ui %}
-                        {% block ui-head %}{% endblock %}
-                        {% block ui-form %}{% endblock %}
-                        {% block ui-foot %}{% endblock %}
-                    {% endblock %}
-
+                    
+                    <div class="ui hidden divider"></div>
                     <div class="ui dividing item">
                         <div class="ui ">{% content_render currentNode.content %}</div>
                     </div>
-                    
                     <div>
                         <div class="ui dropdown">
                             {% for key in item_group_by %}
@@ -181,6 +179,7 @@
                         </div>
                     </div>
                     
+                    <div class="ui hidden divider"></div>
                     {% for node in nodes %}
                     
                     {% ifchanged node.label %}
@@ -197,32 +196,32 @@
                     <div class="ui item">
                         <a class="anchor" id="{{ node.slug }}"></a>
                         <h4 class="ui header">{{ node.title }} - <a class="ui" href="{{ node.get_url }}translate/" >Edit</a></h4>
-                        <div class="ui" >
-                            {% content_render node.content %}
-                        </div>
+                        {% if node.parent == currentNode %}
+                        {% content_render node.content %}
+                        {% endif %}
                         {% if not node.is_leaf_node %}
                         <div class="ui floated" >
                             <a class="ui right floated main"  href="{{ node.get_url }}" >Lire plus ...</a>
                         </div>
                         {% endif %}
                     </div>
-                      
+                      <div class="ui hidden divider"></div>
                     {% if forloop.last %}
                     {% if node.parent %}
-                    <div class="ui dividing button full width" >
+                    <div class="ui button full width" >
                         {% content_add_link node.parent %}
                     </div>
                     {% endif %}
                     {% endif %}
-                      
+                    
                     {% endfor %}
-                
-                
                 {% endblock %}
-
+                
+                <div class="ui hidden divider"></div>
+                
                 <div class="ui dividing right rail">
                     
-                    <div class="ui sticky" >
+                    <div class="ui item dividing" >
                         <h4 class="ui header">{{ nodes.0.parent.title }}</h4>
                         <div class="ui vertical following fluid accordion text menu">
                         {% for node in nodes %}
@@ -237,10 +236,33 @@
                         {% endfor %}
                         </div>
                     </div>
+                    <div class="ui hidden divider"></div>
+                    <div class="ui item dividing" >
+                        <h4 class="ui header">Médias</h4>
+                        <div class="ui items" >
+                            {% for ufile in currentNode.medias.all %}
+                                <div class="ui mini spaced image" >
+                                    <img src="{% thumbnail ufile.file 64x64 %}" />
+                                </div>
+                            {% endfor %}
+                            <a class="ui mini spaced button" href="upload/" >Ajouter</a>
+                        </div>
+                    </div>
+                    <div class="ui hidden divider"></div>
+                    <div class="ui item dividing" >
+                        <h5 class="ui header">Related</h5>
+                        <div class="ui vertical text menu" >
+                            {% for node in currentNode.related.all %}
+                            <div class="item" >
+                                <a href="{{ node.get_url }}" >{{ node.title }}</a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
                 </div>
-                
             </div>
-
+            {% moderate_panel currentNode %}
         </div>
     </div>
 
@@ -250,8 +272,8 @@
           <div class="three wide column">
             <h4 class="ui inverted header">Communauté</h4>
             <div class="ui inverted link list">
-              <a class="item" href="/makerspaces/" target="_blank">Makerspaces</a>
-              <a class="item" href="/ressourceries/" target="_blank">Ressourceries</a>
+              <a class="item" href="/acteurs/" target="_blank">Acteurs</a>
+              <a class="item" href="/register/" target="_blank">Nous rejoindre</a>
             </div>
           </div>
           <div class="three wide column">
@@ -264,11 +286,13 @@
           <div class="seven wide right floated column">
             <h4 class="ui inverted teal header">Aider à péréniser ce projet</h4>
             <p> Le soutien du développement d'openARA vient directement de la communauté.</p>
+            {% comment %}
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick">
               <input type="hidden" name="hosted_button_id" value="7ZAF2Q8DBZAQL">
               <button type="submit" class="ui large teal button">Faites un don aujourd'hui</button>
             </form>
+            {% endcomment %}
           </div>
         </div>
         <div class="ui inverted section divider"></div>
@@ -279,12 +303,15 @@
       </div>
     </div>
   </div>
-{% addtoblock "js" %}
+{% if request.user.is_authenticated %}
+    {% include "content/assets/scripts.html" %}
+{% endif %}
 <script src="{% static 'components/semanticui/less.min.js' %}"></script>
+{% addtoblock "js" %}
 {% endaddtoblock %}
 {% addtoblock "css" %}
-<style>header{position:absolute;}</style>
 {% endaddtoblock %}
+<style>header{position:absolute;}</style>
 </div>
 {% endblock %}
 </body></html>

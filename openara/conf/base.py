@@ -101,6 +101,7 @@ INSTALLED_APPS = [
     "register",
     "content",
     'content.todo',
+    "moderate",
     "openara",
 ]
 

@@ -1,0 +1,27 @@
+{% load momentjs moderate_tags %}
+
+{% for comment in review.comments %}
+<div class="event">
+    <div class="label">
+      <img src="{{ comment.user.image }}">
+    </div>
+    <div class="content">
+      <div class="summary">
+        <a class="user">
+          {{ comment.email|default:"Anonymous" }}
+        </a> {{ comment.subject }}
+        <div class="date">
+          {% moment_from_now comment.modified_date %}
+        </div>
+      </div>
+      <div class="extra text">
+        {{ comment.message }}
+      </div>
+      <div class="meta">
+        <a class="like">
+          <i class="like icon"></i> 4 Likes
+        </a>
+      </div>
+    </div>
+  </div>
+{% endfor %}

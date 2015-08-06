@@ -1,0 +1,13 @@
+<h4 class="ui header" >Commenter</h4>
+<form id="review_comment" 
+    class="ui form" 
+    action="comment/" method="POST" >
+    {% csrf_token %}
+    <div class="ui field">
+        {{ comment_form.new_comment.label }}
+        {{ comment_form.new_comment }}
+    </div>
+    <button class="ui button" >Commenter</button>
+    <input type="hidden" name="ref_model" value="Item" >
+    <input type="hidden" name="ref_pk" value="{{currentNode.pk}}" >
+</form>

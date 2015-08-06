@@ -1,0 +1,18 @@
+<div class="ui item" data-editable="{% if evaluation_moderation_item.editable == True %}true{%else%}false{%endif%}">
+    <div data-value="1" data-rating="1"
+        class="ui {%if evaluation_moderation_item.evaluation >= 1 %}fa-star{% else %}star{% endif%} rating"></div>
+    <div data-value="2" data-rating="2"
+        class="ui {%if evaluation_moderation_item.evaluation >= 2 %}fa-star{% else %}star{% endif%} rating"></div>
+    <div data-value="3" data-rating="3"
+        class="ui {%if evaluation_moderation_item.evaluation >= 3 %}fa-star{% else %}star{% endif%} rating"></div>
+    <div data-value="4" data-rating="4"
+        class="ui {%if evaluation_moderation_item.evaluation >= 4 %}fa-star{% else %}star{% endif%} rating"></div>
+    <div data-value="5" data-rating="5"
+        class="ui {%if evaluation_moderation_item.evaluation >= 5 %}fa-star{% else %}star{% endif%} rating"></div>
+    <div class="">
+        {{ evaluation_moderation_item.evaluation }} / 5
+    </div>
+</div>
+{% if evaluation_moderation_item.editable == True %}
+    <input type="hidden" name="new_evaluation" value="" id="id_new_evaluation"/>
+{%endif%}
