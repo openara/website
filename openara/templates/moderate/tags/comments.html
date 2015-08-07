@@ -1,9 +1,9 @@
 {% load momentjs moderate_tags %}
-
+<div class="ui feed">
 {% for comment in review.comments %}
 <div class="event">
     <div class="label">
-      <img src="{{ comment.user.image }}">
+      <img src="{{ comment.user.image.url|default:'/static/assets/images/design/people/man-2-300x300.png' }}">
     </div>
     <div class="content">
       <div class="summary">
@@ -17,11 +17,14 @@
       <div class="extra text">
         {{ comment.message }}
       </div>
+      {% comment %}
       <div class="meta">
         <a class="like">
           <i class="like icon"></i> 4 Likes
         </a>
       </div>
+      {% endcomment %}
     </div>
-  </div>
+</div>
 {% endfor %}
+</div>

@@ -1,20 +1,18 @@
 
-<div>
-    <h4 class="ui header" >Votre avis :</h4>
-    <div class="ui menu two column grid" >
-        <form class="item column" id="review_accept" method="POST" action="comment/">
-            {% csrf_token %}
-            <input type="hidden" name="{{ comment_form.new_status.name }}" value="accepted" />
-            <input class="button" type="submit" value="Valider" />
-            <input type="hidden" name="ref_model" value="Item" >
-    <input type="hidden" name="ref_pk" value="{{currentNode.pk}}" >
-        </form>
-        <form class="item column" id="review_reject" method="POST" action="comment/" >
-            {% csrf_token %}
-            <input type="hidden" name="{{ comment_form.new_status.name }}" value="rejected" />
-            <input class="button" type="submit" value="Rejeter" />
-            <input type="hidden" name="ref_model" value="Item" >
-    <input type="hidden" name="ref_pk" value="{{currentNode.pk}}" >
-        </form>
-    </div>
+<h4 class="ui header" >Votre avis :</h4>
+<div class="ui menu right floated" >
+    <form class="item" id="review_accept" method="POST" action="comment/">
+        {% csrf_token %}
+        <input type="hidden" name="{{ comment_form.new_status.name }}" value="accepted" />
+        <input type="hidden" name="ref_model" value="Item" >
+        <input type="hidden" name="ref_pk" value="{{currentNode.pk}}" >
+        <input class="ui button primary" type="submit" value="Valider" />
+    </form>
+    <form class="ui item" id="review_reject" method="POST" action="comment/" >
+        {% csrf_token %}
+        <input type="hidden" name="{{ comment_form.new_status.name }}" value="rejected" />
+        <input type="hidden" name="ref_model" value="Item" >
+        <input type="hidden" name="ref_pk" value="{{currentNode.pk}}" >
+        <input class="ui button" type="submit" value="Rejeter" />
+    </form>
 </div>

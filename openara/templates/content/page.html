@@ -47,22 +47,22 @@
           </a>
           <a href="/"><b>{{ rootNode.title }}</b></a>
         </div>
-    {% for root in roots %}
-        {% if root.get_children|length %}
-        <a class="item" href="{{ root.get_url }}">
-          <b>{{ root.label }}</b>
-        </a>
-        {% else %}
-        <div class="item">
-          <div class="header">{{ root.label }}</div>
-          <div class="menu">
-            {% for child in root.get_children %}
-              <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-    {% endfor %}
+        {% for root in roots %}
+            {% if root.get_children|length %}
+            <a class="item" href="{{ root.get_url }}">
+              <b>{{ root.label }}</b>
+            </a>
+            {% else %}
+            <div class="item">
+              <div class="header">{{ root.label }}</div>
+              <div class="menu">
+                {% for child in root.get_children %}
+                  <a class="item" href="{{ child.get_url }}">{{ child.title }} </a>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
     
     
@@ -137,40 +137,28 @@
                 <div class="introduction">
                   <h1 class="ui header">{{ currentNode.title }} <div class="sub header">{{ currentNode.description }}</div></h1>
                   <div class="ui hidden divider"></div>
-                </div>
-                  <div class="ui secondary menu">
-                    <a class="icon item" href="view/" ><i class="icon"></i>Lire</a>
+                <div class="ui secondary menu right floated">
+                    <a class="icon item" href="view/" ><i class="icon"></i>Document</a>
                     <a class="icon item" href="medias/" ><i class="icon"></i>Medias</a>
                     <a class="icon item" href="map/" ><i class="icon"></i>Carte</a>
-                    <a class="icon item" href="agenda/" ><i class="icon"></i>Agenda</a>
-                    {% comment %}
-                    <a class="icon item" href="change/" ><i class="icon"></i>Publication</a>
-                    <a class="icon item" href="timing/" ><i class="icon"></i>Agenda</a>
-                    <div class="ui language dropdown right floating icon item" id="languages" data-content="Sélectionnez votre langue">
-                      <i class="world icon"></i>
-                      <div class="menu">
-                        <div class="header">Sélectionnez votre langue</div>
-                        <div class="scrolling menu">
-                          <div class="item" data-percent="100" data-value="en" data-text="Anglais" data-english="English"><span class="description">Français</span> French </div>
-                          <div class="item" data-percent="100" data-value="en" data-text="Anglais" data-english="English"><span class="description">English</span> Anglais </div>
-                        </div>
-                      </div>
-                    </div>
-                    {% endcomment %}
+                    <a class="icon item" href="timeline/" ><i class="icon"></i>Agenda</a>
+                    <a class="icon item" href="change/" ><i class="icon"></i>Edit</a>
+                </div>
+                
                 </div>
                </div>
             </div>
             <div class="main ui intro container">
                 
+                    
                 {% block body %}
                 {% endblock %}
                 
                 {% block content %}
-                    
                     <div class="ui hidden divider"></div>
-                    <div class="ui dividing item">
-                        <div class="ui ">{% content_render currentNode.content %}</div>
-                    </div>
+                    <div class="ui item">{% content_render currentNode.content %}</div>
+                    <div class="ui divider"></div>
+                    
                     <div>
                         <div class="ui dropdown">
                             {% for key in item_group_by %}
@@ -248,6 +236,7 @@
                             <a class="ui mini spaced button" href="upload/" >Ajouter</a>
                         </div>
                     </div>
+                    {% comment %}
                     <div class="ui hidden divider"></div>
                     <div class="ui item dividing" >
                         <h5 class="ui header">Related</h5>
@@ -259,7 +248,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                    
+                    {% endcomment %}
                 </div>
             </div>
             {% moderate_panel currentNode %}

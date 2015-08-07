@@ -12,19 +12,29 @@
         {% moderate_average_evaluation currentNode %}
         
         <h4 class="ui header" >Avis des relecteurs</h4>
-        {% for ur in review.reviewers %}
-            <div class="{{ ur.status}}" >
-            <div>
-                <div >               
-                    <div >{{ur.status }}</div>
+        <div class="ui feed">
+        {% for comment in review.reviewers %}
+        <div class="event">
+            <div class="label">
+              <img src="{{ comment.user.image.url|default:'/static/assets/images/design/people/man-2-300x300.png' }}">
+            </div>
+            <div class="content">
+              <div class="summary">
+                <a class="user">
+                  {{ comment.email|default:"Anonymous" }}
+                </a>
+                <div class="date">
+                  {% moment_from_now comment.modified_date %}
                 </div>
-                <div style="">
-                    <span >{{ ur.email }}</span>
-                    <div style="margin:8px; font-size:12px;" >{% moment_from_now  ur.modified_date %}</div>
-                </div>
+              </div>
+              <div class="extra text">
+                <div class="ui label right" >{{ comment.status }}</div>
+              </div>
             </div>
         </div>
         {% endfor %}
+        </div>
+        <div class="ui divider"></div>
         {% include 'moderate/tags/vote_form.html' %}
     </div>
 </div>
