@@ -2,7 +2,7 @@
 
 ### Installation
 
-Install python 2.7, virtualenv,libpython2.7-dev & postgresql-devel (libpq-dev in Debian/Ubuntu)
+Install python 2.7, virtualenv, libpython2.7-dev & postgresql-devel (libpq-dev in Debian/Ubuntu)
 
 In the directory where you have cloned the repo,
 create a virtualenv to collect python packages
