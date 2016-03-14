@@ -4,11 +4,17 @@ Created on 12 janv. 2014
 @author: rux
 '''
 import os
+from apetizer.settings import *
 
-if os.environ['DJANGO_ENV'] == 'production':
-    from openara.conf.prod import *
-else:
-    from openara.conf.dev import *
+INSTALLED_APPS.append('openara')
+WSGI_APPLICATION = 'openara.wsgi.application'
 
 # Just a pointer to the main config module
 SECRET_KEY = "KHFUBYFGJHGILU?MHLGHKUH8KJGBUF5 466778"
+
+DATABASES = {
+    'default':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.getcwd()+'/database.db',
+     },
+}

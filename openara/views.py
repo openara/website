@@ -4,5 +4,5 @@ Created on 17 mars 2015
 @author: rux
 '''
 
-handler404 = 'content.views.front.handler404'
-handler500 = 'content.views.front.handler500'
+handler404 = 'apetizer.views.front.handler404'
+handler500 = 'apetizer.views.front.handler500'

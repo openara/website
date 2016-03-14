@@ -1,0 +1,62 @@
+{% load markdown_deux_tags %}
+
+<div class="item-list row">
+{% for node in acteurs %}
+    <div class="list-item col-md-4">
+        <section class="box">
+            {% if node.get_image %}
+            <a href="{{ node.get_url }}" class="image"><img src="{{ node.get_image.url }}" alt="{{ node.title }}" /></a>
+            {% endif %}
+            <header>
+                <h3>{{ node.title }}</h3>
+            </header>
+            <p>{{ node.description|markdown }}</p>
+        </section>
+    </div>
+{% endfor %}
+</div>
+
+{% block extra-styles %}
+<style>
+.item-list{
+    
+}
+.list-item{
+    color:white;
+}
+.box{
+    margin:20px;
+    text-align:center;
+}
+.box h3{
+    color:white;
+}
+
+.box > a.image img{
+    height:100px;
+}
+
+
+.list-item img{
+    margin-bottom:10px;
+}
+
+.list-item a{
+    color:white;
+}
+.list-item p{
+    font-size:12px;
+}
+
+.list-item .social{
+    list-style-type:none;
+    margin:0px;
+    padding:0px;
+}
+.list-item .social > a.fa{
+}
+</style>
+{% endblock %}
+        
+        
+        
