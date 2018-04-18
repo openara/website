@@ -1,9 +1,9 @@
-{% extends 'openara/theme.html' %}
+{% extends '200.html' %}
 {% load static i18n content_tags openara_tags markdown_deux_tags %}
 
 {% block page_body %}
     <div id="content" role="main">
-        
+
         {% block page-header %}
         {% endblock %}
 
@@ -14,7 +14,7 @@
                     <img src="{% static "images/logo-openara.png" %}" width="133" /><br/>
                     <h1 class="headline hyper hairline">{{ currentNode.title }}</h1>
                     <p class="big">{{ currentNode.description|markdown }}</p>
-                    
+
                     <div class="btn" ><a href="{{ currentNode.get_url }}next/" >Visiter</a></div>
                 </header>
                 <div class="row">
@@ -25,7 +25,7 @@
             </div>
         </section>
         {% endblock %}
-        
+
         <section id="page-content" class="section swatch-yellow-black has-top">
             <div class="decor-top">
                 <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">

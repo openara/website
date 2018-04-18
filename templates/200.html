@@ -16,12 +16,12 @@
         <link rel="apple-touch-icon-precomposed" href="{% static "assets/images/favicons/apple-touch-icon-60x60-precomposed.png" %}">
         <base href="{{ currentNode.get_url }}" ></base>
         {% block extra-styles %}
-        {% include 'openara/assets/styles.html' %}
-        {% include 'openara/assets/fonts.html' %}
+        {% include 'assets/styles.html' %}
+        {% include 'assets/fonts.html' %}
         {% endblock %}
     </head>
     <body>
-    
+
         <header id="masthead" class="navbar navbar-sticky swatch-white-black" role="banner">
 
             <div class="container">
@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <nav class="collapse navbar-collapse main-navbar" role="navigation">
-                    
+
                     {% if request.user.is_staff %}
                     {% comment %}
                     <div class="sidebar-widget widget_search pull-right">
@@ -53,13 +53,13 @@
                     </div>
                     {% endcomment %}
                     {% endif %}
-                    
+
                     <ul class="nav navbar-nav navbar-right" style="text-align:center">
                         <li class="{% if currentNode.get_url == '/' %}active{% endif %}"><a href="/">Accueil</a></li>
                         {% if request.user.is_authenticated %}
                         <li class="{% if currentNode.get_url == '/logout/' %}active{% endif %}"><a href="/logout/">Déconnexion</a></li>
                         {% endif %}
-                        
+
                         {% comment %}
                         {% if request.user.is_authenticated %}
                         {% else %}
@@ -75,7 +75,7 @@
         </header>
 
 {% block page_body %}
-    
+
         {% block page-breadcrumb %}
             {% if request.path != '/' %}
             <div class="container">{% content_breadcrumb currentNode %}</div>
@@ -90,10 +90,10 @@
                 {% endfor %}
             {% endif %}
         {% endblock %}
-        
-                
+
+
         {% block page_top_bottom %}
-        
+
             {% if user.is_authenticated %}
                 {% if has_permission %}
                     {% block ui-head %}{% endblock %}
@@ -102,15 +102,15 @@
                     {% block ui-foot %}{% endblock %}
                 {% endif %}
             {% else %}
-            
+
             {% endif %}
-            
+
         {% endblock %}
 
 
         {% block page_content %}
         <div id="content" role="main">
-            
+
             {% block page-header %}
             {% endblock %}
 
@@ -125,7 +125,7 @@
                 </div>
             </section>
             {% endblock %}
-            
+
             <section id="page-content" class="section swatch-yellow-black has-top">
                 <div class="decor-top">
                     <svg class="decor" height="100%" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -135,8 +135,6 @@
                 {% block content %}
                 <div class="row">
                     <div class="col-md-8 col-md-push-2">
-                    {% content_item currentNode.url %}
-                    {% include 'we-are-makers.html' %}
                     </div>
                 </div>
                 {% endblock %}
@@ -194,11 +192,6 @@
         </a>
         <script src="{% static "assets/js/packages.min.js" %}"></script>
         <script src="{% static "assets/js/theme.min.js" %}"></script>
-        {% if request.user.is_authenticated %}
-            {% include "content/assets/scripts.html" %}
-        {% else %}
-            {% include 'openara/assets/scripts.html' %}
-        {% endif %}
         {% block extra-scripts %}{% endblock %}
     </body>
 
